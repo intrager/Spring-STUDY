@@ -27,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StopWatch;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +44,16 @@ class OwnerController {
 
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
-	@Autowired
-	private OwnerRepository owners;
+	private final OwnerRepository owners;
+	private PetRepository petRepository;
+
+	public void setPetRepository(PetRepository petRepository) {
+		this.petRepository = petRepository;
+	}
+
+	public OwnerController(OwnerRepository clinicService) {
+		this.owners = clinicService;
+	}
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
@@ -52,13 +61,21 @@ class OwnerController {
 	}
 
 	@GetMapping("/owners/new")
+	@LogExecutionTime
 	public String initCreationForm(Map<String, Object> model) {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+
 		Owner owner = new Owner();
 		model.put("owner", owner);
+
+		stopWatch.stop();
+		System.out.println(stopWatch.prettyPrint());
 		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/owners/new")
+	@LogExecutionTime
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
@@ -70,12 +87,14 @@ class OwnerController {
 	}
 
 	@GetMapping("/owners/find")
+	@LogExecutionTime
 	public String initFindForm(Map<String, Object> model) {
 		model.put("owner", new Owner());
 		return "owners/findOwners";
 	}
 
 	@GetMapping("/owners")
+	@LogExecutionTime
 	public String processFindForm(@RequestParam(defaultValue = "1") int page, Owner owner, BindingResult result,
 			Model model) {
 
@@ -132,6 +151,7 @@ class OwnerController {
 	}
 
 	@GetMapping("/owners/{ownerId}/edit")
+	@LogExecutionTime
 	public String initUpdateOwnerForm(@PathVariable("ownerId") int ownerId, Model model) {
 		Owner owner = this.owners.findById(ownerId);
 		model.addAttribute(owner);
@@ -139,6 +159,7 @@ class OwnerController {
 	}
 
 	@PostMapping("/owners/{ownerId}/edit")
+	@LogExecutionTime
 	public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result,
 			@PathVariable("ownerId") int ownerId) {
 		if (result.hasErrors()) {
@@ -157,6 +178,7 @@ class OwnerController {
 	 * @return a ModelMap with the model attributes for the view
 	 */
 	@GetMapping("/owners/{ownerId}")
+	@LogExecutionTime
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		Owner owner = this.owners.findById(ownerId);
