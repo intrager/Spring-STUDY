@@ -41,7 +41,6 @@ public class MyController {
 			if(result.getFieldError("content") != null) {
 				System.out.println("2 : " + result.getFieldError("content").getCode());
 			}
-			
 			page = "createPage";
 		}
 		return page;
