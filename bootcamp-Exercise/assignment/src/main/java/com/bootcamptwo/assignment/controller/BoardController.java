@@ -44,6 +44,16 @@ public class BoardController {
     public Integer countBoard() {
         return boardMapper.countBoard();
     }
+
+    @PutMapping("/board")
+    public ResultVO modifyBoard(@RequestBody BoardVO boardVO) {
+        int result = boardMapper.updateBoard(boardVO);
+        if(result > 0) {
+            return new ResultVO(0, "success");
+        } else {
+            return new ResultVO(100, "fail");
+        }
+    }
 }
 /*
 클라이언트에서 Pagination 을 구현하기 위해서는
