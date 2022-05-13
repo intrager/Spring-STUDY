@@ -4,10 +4,9 @@ import com.bootcamptwo.assignment.domain.BoardVO;
 import com.bootcamptwo.assignment.domain.ResultVO;
 import com.bootcamptwo.assignment.persistence.BoardMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,5 +23,15 @@ public class BoardController {
         } else {
             return new ResultVO(100, "fail");
         }
+    }
+
+    @GetMapping("/board/{id}")  // read
+    public BoardVO findOne(@PathVariable int id) {
+        return boardMapper.findOneBoard(id);
+    }
+
+    @GetMapping("/boards")  // read list
+    public List<BoardVO> findAllBoard() {
+        return boardMapper.findBoard();
     }
 }

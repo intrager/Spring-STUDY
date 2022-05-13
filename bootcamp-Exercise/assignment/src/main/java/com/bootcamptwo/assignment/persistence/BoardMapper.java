@@ -3,7 +3,13 @@ package com.bootcamptwo.assignment.persistence;
 import com.bootcamptwo.assignment.domain.BoardVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
+/*
+    xml 구문 대신 <script>태그를 이용함
+ */
 @Mapper
 public interface BoardMapper {  // 구동 시 이 인터페이스는 인스턴스로 스프링에 등록됨
     @Insert({"<script>",
@@ -11,6 +17,18 @@ public interface BoardMapper {  // 구동 시 이 인터페이스는 인스턴�
             "VALUES(#{title}, #{content})",
             "</script>"})
     int insertBoard(BoardVO boardVO);
+
+    @Select({"<script>",
+            "SELECT * from board",
+            "order by id desc",
+            "</script>"})
+    List<BoardVO> findBoard();
+
+    @Select({"<script>",
+            "SELECT * from board",
+            "where id = #{id}",
+            "</script>"})
+    BoardVO findOneBoard(int id);
 }
 
 /*
