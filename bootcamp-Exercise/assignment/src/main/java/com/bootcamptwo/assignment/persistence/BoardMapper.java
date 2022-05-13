@@ -1,10 +1,7 @@
 package com.bootcamptwo.assignment.persistence;
 
 import com.bootcamptwo.assignment.domain.BoardVO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -37,7 +34,7 @@ public interface BoardMapper {  // 구동 시 이 인터페이스는 인스턴�
     @Select({"<script>",
             "SELECT count(*) from board",
             "</script>"})
-    Integer countBoard();
+    int countBoard();
 
     @Update({"<script>",
             "UPDATE board",
@@ -48,6 +45,12 @@ public interface BoardMapper {  // 구동 시 이 인터페이스는 인스턴�
             "WHERE id = #{id}",
             "</script>"})
     int updateBoard(BoardVO boardVO);
+
+    @Delete({"<script>",
+            "DELETE FROM board",
+            "WHERE id = #{id}",
+            "</script>"})
+    int deleteBoard(int id);
 }
 
 /*

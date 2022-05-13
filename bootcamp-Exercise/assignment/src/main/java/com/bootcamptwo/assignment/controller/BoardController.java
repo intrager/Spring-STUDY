@@ -54,7 +54,18 @@ public class BoardController {
             return new ResultVO(100, "fail");
         }
     }
+
+    @DeleteMapping("/board")
+    public ResultVO removeBoard(@RequestParam int id) {
+        int result = boardMapper.deleteBoard(id);
+        if(result > 0) {
+            return new ResultVO(0, "success");
+        } else {
+            return new ResultVO(100, "fail");
+        }
+    }
 }
+
 /*
 클라이언트에서 Pagination 을 구현하기 위해서는
 현재 페이지 번호, 페이지 사이즈(크기), 전체 개수 --> 3가지가 필수요소임.
