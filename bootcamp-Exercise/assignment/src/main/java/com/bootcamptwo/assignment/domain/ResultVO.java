@@ -2,12 +2,10 @@ package com.bootcamptwo.assignment.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+@AllArgsConstructor // 모든 프로퍼티를 포함한 생성자를 대신 생성해줌
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ResultVO {
-    private int code;
+    private Integer code;
     private String message;
 }
