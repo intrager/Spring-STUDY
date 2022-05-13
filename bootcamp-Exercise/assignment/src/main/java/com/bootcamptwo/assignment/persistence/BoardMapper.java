@@ -21,14 +21,22 @@ public interface BoardMapper {  // 구동 시 이 인터페이스는 인스턴�
     @Select({"<script>",
             "SELECT * from board",
             "order by id desc",
+            "<if test='offset != null and pageSize != null'>",
+            "LIMIT #{offset}, #{pageSize}",
+            "</if>",
             "</script>"})
-    List<BoardVO> findBoard();
+    List<BoardVO> findBoard(Integer offset, Integer pageSize);
 
     @Select({"<script>",
             "SELECT * from board",
             "where id = #{id}",
             "</script>"})
     BoardVO findOneBoard(int id);
+
+    @Select({"<script>",
+            "SELECT count(*) from board",
+            "</script>"})
+    Integer countBoard();
 }
 
 /*
