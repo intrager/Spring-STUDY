@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-group = 'com.bootcamptwo'
+group = 'com.bootcamp'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -19,16 +19,18 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.5'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
-    // Swagger Library
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    implementation 'org.apache.poi:poi:4.1.2'
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
 }
 
 tasks.named('test') {
