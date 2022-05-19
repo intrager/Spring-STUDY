@@ -1,0 +1,49 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.8'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.bootcamp'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    // excel
+    implementation 'org.apache.poi:poi:4.1.2'
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
+
+    // 파일 확장자 가져오기 기능을 사용하기 위함
+    implementation 'commons-io:commons-io:2.11.0'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+/*
+    could not resolve org.springframework.boot:spring-boot-buildpack-platform
+    found invalid gradle jvm configuration
+    Could not resolve all files for configuration ':classpath'
+    --> classpath에는 oracle db 및 jdbc로 설정했는데 이 프로젝트 생성할 때 db 관련된 의존성이 없어서 오류 발생
+    즉, 환경변수 문제
+*/
