@@ -1,6 +1,6 @@
 package com.bootcamp.fifthtrialexcel.controller;
 
-import com.bootcamp.fifthtrialexcel.domain.ExcelData;
+import com.bootcamp.fifthtrialexcel.domain.Excel;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -9,9 +9,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,16 +17,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/excel")
 public class ExcelController {
 
-    @GetMapping("/excel")
+    @GetMapping("")
     public String enterExcelPage() {
         return "excel/excel";
     }
 
-    @PostMapping("/excel/read")
+    @PostMapping("/read")
     public String readExcel(@RequestParam("file") MultipartFile file, Model model) throws IOException {
-        List<ExcelData> dataList = new ArrayList<>();
+        List<Excel> dataList = new ArrayList<>();
 
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
@@ -50,7 +49,7 @@ public class ExcelController {
         for(int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
             Row row = sheet.getRow(i);
 
-            ExcelData data = new ExcelData();
+            Excel data = new Excel();
 
             // data.setSeq((long) row.getCell(0).getNumericCellValue());
             data.setWorkCode(row.getCell(0).getStringCellValue());
@@ -66,5 +65,10 @@ public class ExcelController {
         model.addAttribute("list", dataList);
 
         return "excel/excelList";
+    }
+
+    @PostMapping("")
+    public String insertToDB(@ModelAttribute("excelData") Excel excel, Model model) {
+        return "excel/excel";
     }
 }

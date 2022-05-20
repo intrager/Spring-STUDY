@@ -3,7 +3,7 @@ package com.bootcamp.fifthtrialexcel.domain;
 import lombok.Data;
 
 @Data
-public class ExcelData {
+public class Excel {
     private Long seq;
     private String workCode;
     private String workName;

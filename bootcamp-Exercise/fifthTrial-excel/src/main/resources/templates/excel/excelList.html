@@ -3,34 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Excel List</title>
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-  <div
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">업무코드</th>
-        <th scope="col">업무명</th>
-        <th scope="col">회사</th>
-        <th scope="col">담당자</th>
-        <th scope="col">직급</th>
-        <th scope="col">종류</th>
-        <th scope="col">전화번호</th>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">업무코드</th>
+          <th scope="col">업무명</th>
+          <th scope="col">회사</th>
+          <th scope="col">담당자</th>
+          <th scope="col">직급</th>
+          <th scope="col">종류</th>
+          <th scope="col">전화번호</th>
+        </tr>
+      </thead>
+      <tbody>
+          <button type="submit">DB Insert</button>
+          <tr th:each="data : ${list}">
+            <td th:text="${data.workCode}"></td>
+            <td th:text="${data.workName}"></td>
+            <td th:text="${data.company}"></td>
+            <td th:text="${data.rank}"></td>
+            <td th:text="${data.manager}"></td>
+            <td th:text="${data.category}"></td>
+            <td th:text="${data.phone}"></td>
+          </tr>
+      </tbody>
+    </table>
+    <form action="#" th:action="@{'/excel/'}" th:object="${excel}" th:method="post">
+      <button type="submit">DB Insert</button>
+      <tr th:each="excel : ${list}">
+        <input th:text="${workCode}" name="workCode" />
+        <input th:text="${workName}" name="workName" />
+        <input th:text="${company}" name="company" />
+        <input th:text="${rank}" name="rank" />
+        <input th:text="${manager}" name="manager" />
+        <input th:text="${category}" name="category" />
+        <input th:text="${phone}" name="phone" />
       </tr>
-    </thead>
-    <tbody>
-      <tr th:each="data : ${list}">
-        <td th:text="${data.workCode}"></td>
-        <td th:text="${data.workName}"></td>
-        <td th:text="${data.company}"></td>
-        <td th:text="${data.manager}"></td>
-        <td th:text="${data.rank}"></td>
-        <td th:text="${data.category}"></td>
-        <td th:text="${data.phone}"></td>
-      </tr>
-    </tbody>
-  </table>
+    </form>
 </body>
 </html>

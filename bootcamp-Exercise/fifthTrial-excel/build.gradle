@@ -29,8 +29,9 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     // excel
-    implementation 'org.apache.poi:poi:4.1.2'
-    implementation 'org.apache.poi:poi-ooxml:4.1.2'
+    implementation 'org.apache.poi:poi:3.11'
+    implementation 'org.apache.poi:poi-ooxml:3.11'
+    implementation 'org.apache.poi:poi-ooxml-schemas:3.11'
 
     // 파일 확장자 가져오기 기능을 사용하기 위함
     implementation 'commons-io:commons-io:2.11.0'
