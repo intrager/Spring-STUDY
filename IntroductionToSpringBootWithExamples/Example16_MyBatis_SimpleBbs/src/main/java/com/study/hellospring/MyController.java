@@ -7,12 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.study.hellospring.dao.SimpleBbsDAO;
+import com.study.hellospring.dao.ISimpleBbsDAO;
 
 @Controller
 public class MyController {
 	@Autowired
-	SimpleBbsDAO dao;
+	ISimpleBbsDAO dao;
 	
 	@RequestMapping("/")
 	public String root() throws Exception {

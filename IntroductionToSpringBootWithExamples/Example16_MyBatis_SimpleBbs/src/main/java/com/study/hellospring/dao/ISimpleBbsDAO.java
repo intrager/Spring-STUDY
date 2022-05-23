@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.study.hellospring.dto.SimpleBbsDTO;
 
 @Mapper	// 다음 인터페이스의 구현을 XML로 한다는 의미
-public interface SimpleBbsDAO {
+public interface ISimpleBbsDAO {
+	
 	public List<SimpleBbsDTO> listDAO();
 	public SimpleBbsDTO viewDAO(String id);
 	public int writeDAO(String writer, String title, String content);
