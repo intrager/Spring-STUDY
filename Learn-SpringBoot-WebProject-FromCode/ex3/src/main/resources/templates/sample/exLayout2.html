@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:replace="~{/fragments/fragment3:: target(~{this:: #ulFirst}, ~{this::#ulSecond})}">
+        <!-- this:: #ulFirst
+            this는 현재 페이지를 의미할 때 사용하는데 생략이 가능. #ulFirst CSS의 id 선택자를 의미 -->
+        <ul id="ulFirst">
+            <li>AAA</li>
+            <li>BBB</li>
+            <li>CCC</li>
+        </ul>
+        <ul id="ulSecond">
+            <li>111</li>
+            <li>222</li>
+            <li>333</li>
+        </ul>
+    </th:block>
+</html>
