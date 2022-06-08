@@ -34,7 +34,7 @@
 
                 <div class="form-group">
                     <label>RegDate</label>
-                    <input type="text" class="form-control" name="regDate"
+                    <input type="text" class="form-control"
                            th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly />
                 </div>
 
@@ -63,6 +63,10 @@
 
                 // 수정
                 $(".modifyBtn").click(function() {
+
+                    if(!confirm("수정하시겠습니까?")) {
+                        return ;
+                    }
                     actionForm
                         .attr("action", "/board/modify")
                         .attr("method", "post")
@@ -84,8 +88,10 @@
 
                     actionForm
                         .attr("action", "/board/list")
-                        .attr("method",)
-                })
+                        .attr("method", "get");
+
+                    actionForm.submit();
+                });
             </script>
         </th:block>
     </th:block>

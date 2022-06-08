@@ -41,7 +41,9 @@ public class BoardServiceImpl implements BoardService {
 
         Function<Object[], BoardDTO> fn = (en -> entityToDTO((Board) en[0], (Member) en[1], (Long) en[2]));
 
-        Page<Object[]> result = boardRepository.getBoardWithReplyCount(
+        Page<Object[]> result = boardRepository.searchPage(
+                pageRequestDTO.getType(),
+                pageRequestDTO.getKeyword(),
                 pageRequestDTO.getPageable(Sort.by("bno").descending()));
 
         return new PageResultDTO<>(result, fn);
@@ -67,6 +69,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void modify(BoardDTO boardDTO) {
         Board board = boardRepository.getById(boardDTO.getBno());   // getOne() is deprecated method.
+
         board.changeTitle(boardDTO.getTitle());
         board.changeContent(boardDTO.getContent());
 
