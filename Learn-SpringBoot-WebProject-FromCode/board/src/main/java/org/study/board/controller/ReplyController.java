@@ -31,6 +31,22 @@ public class ReplyController {
         Long rno = replyService.register(replyDTO);
         return new ResponseEntity<>(rno, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{rno}")
+    public ResponseEntity<String> remove(@PathVariable("rno") Long rno) {
+        log.info("RNO : " + rno);
+        replyService.remove(rno);
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
+    @PutMapping("/{rno}")
+    public ResponseEntity<String> modify(@RequestBody ReplyDTO replyDTO) {
+        log.info(replyDTO);
+
+        replyService.modify(replyDTO);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
 }
 /**
  * @RestController에서 모든 메서드의 리턴 타입은 기본으로 JSON 형태
