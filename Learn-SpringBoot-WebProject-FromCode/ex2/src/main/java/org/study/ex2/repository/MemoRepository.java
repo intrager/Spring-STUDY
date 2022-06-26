@@ -22,7 +22,6 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
     /**
      *   JPQL 사용
      */
-
     @Query("select m from Memo m order by m.mno desc")
     List<Memo> getListDesc();
 
