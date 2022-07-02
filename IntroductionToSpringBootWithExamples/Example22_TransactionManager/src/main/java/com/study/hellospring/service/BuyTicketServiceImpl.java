@@ -28,7 +28,7 @@ public class BuyTicketServiceImpl implements BuyTicketService {
 		try {
 			transaction1DAO.pay(consumerId, amount);
 			
-			// 의도적 에러 발생
+			// 의도적으로 발생시키는 에러
 			if(error.equals("1")) { int n = 10 / 0; }
 		
 			transaction2DAO.pay(consumerId, amount);

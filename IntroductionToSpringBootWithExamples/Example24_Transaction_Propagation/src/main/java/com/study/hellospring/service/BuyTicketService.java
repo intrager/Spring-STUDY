@@ -3,6 +3,8 @@ package com.study.hellospring.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -10,7 +12,7 @@ import com.study.hellospring.dao.Transaction1DAO;
 import com.study.hellospring.dao.Transaction2DAO;
 
 @Service
-public class BuyTicketServiceImpl implements BuyTicketService {
+public class BuyTicketService {
 	@Autowired
 	Transaction1DAO transaction1DAO;
 	@Autowired
@@ -18,8 +20,8 @@ public class BuyTicketServiceImpl implements BuyTicketService {
 	
 	@Autowired
 	TransactionTemplate transactionTemplate;
-	
-	@Override
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public int buy(String consumerId, int amount, String error) {
 		try {
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -35,7 +37,7 @@ public class BuyTicketServiceImpl implements BuyTicketService {
 			});
 			return 1;
 		} catch(Exception e) {
-			System.out.println("[TransactionTemplate] Rollback");
+			System.out.println("[Transaction Propagation #2] Rollback");
 			return 0;
 		}
 	}
