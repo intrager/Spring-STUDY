@@ -30,9 +30,9 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 			loginFailureCount(loginId);
 			errorMsg = "아이디나 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
 		} else if (exception instanceof DisabledException) {
-			errorMsg = "계정이 비활성화됐습니다. 관리자에게 문의하세요";
+			errorMsg = "계정이 비활성화 되었습니다. 관리자에게 문의하세요.";
 		} else if (exception instanceof CredentialsExpiredException) {
-			errorMsg = "비밀번호 유효기간이 만료 되었습니다. 관리자에게 문의하세요";
+			errorMsg = "비밀번호 유효기간이 만료되었습니다. 관리자에게 문의하세요";
 		}
 		
 		request.setAttribute("username", loginId);
@@ -41,7 +41,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 		request.getRequestDispatcher("/loginForm?error=true").forward(request, response);
 	}
 	
-	// 비밀번호를 3번 이상 틀릴 시 계정 잠금 처리
+	// 비밀번호를 세 번 이상 틀릴 시 계정 잠금 처리
 	protected void loginFailureCount(String username) {
 		/*
 		 * // 틀린 횟수 업데이트
@@ -49,7 +49,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 		 * 
 		 * // 틀린 횟수 조회
 		 * int cnt = userDAO.checkFailureCount(username);
-		 * if(cnt == 3) {
+		 * if(cnt = 3) {
 		 * 	// 계정 잠금 처리
 		 * 	userDAO.disabledUsername(username);
 		 * }
