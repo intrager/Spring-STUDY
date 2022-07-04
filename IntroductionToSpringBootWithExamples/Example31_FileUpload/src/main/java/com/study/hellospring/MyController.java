@@ -17,7 +17,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 public class MyController {
 	@RequestMapping("/")
 	public @ResponseBody String root() throws Exception {
-		return "FileUpload";
+		return "FileUpload (2)";
 	}
 	
 	@RequestMapping("/uploadForm")
