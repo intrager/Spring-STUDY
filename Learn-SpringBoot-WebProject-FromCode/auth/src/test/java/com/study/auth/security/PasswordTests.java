@@ -1,4 +1,4 @@
-package com.example.auth.security;
+package com.study.auth.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
