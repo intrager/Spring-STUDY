@@ -24,7 +24,6 @@ public class AuthMemberEntity extends BaseEntity{
     private boolean fromSocial;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @Builder.Default
     private Set<AuthMemberRole> roleSet = new HashSet<>();
 
     public void addMemberRole(AuthMemberRole authMemberRole) {

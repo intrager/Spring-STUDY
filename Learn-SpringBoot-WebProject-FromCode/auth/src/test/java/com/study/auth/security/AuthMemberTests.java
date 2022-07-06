@@ -29,13 +29,13 @@ public class AuthMemberTests {
                     .email("user" + i + "@study.org")
                     .name(i + "번 사용자")
                     .fromSocial(false)
-                    .password(passwordEncoder.encode("1q2w3e4r"))
+                    .password(passwordEncoder.encode("1234"))
                     .build();
             // Default Role
             authMemberEntity.addMemberRole(AuthMemberRole.USER);
 
             if(i > 80) {
-                authMemberEntity.addMemberRole(AuthMemberRole.MANAGER);
+                authMemberEntity.addMemberRole(AuthMemberRole.MEMBER);
             }
             if(i > 90) {
                 authMemberEntity.addMemberRole(AuthMemberRole.ADMIN);
