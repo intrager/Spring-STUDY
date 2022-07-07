@@ -1,6 +1,8 @@
 package com.study.auth.config;
 
 import com.study.auth.security.filter.APICheckFilter;
+import com.study.auth.security.filter.APILoginFilter;
+import com.study.auth.security.handler.APILoginFailHandler;
 import com.study.auth.security.handler.AuthLoginSuccessHandler;
 import com.study.auth.security.service.AuthUserDetailsService;
 import lombok.extern.log4j.Log4j2;
@@ -43,16 +45,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.oauth2Login().successHandler(successHandler());
         http.rememberMe().tokenValiditySeconds(60 * 60 * 24 * 7)    // 소셜 로그인은 remember-me를 사용할 수 없음
                 .userDetailsService(authUserDetailsService);    // 7 days
+
         http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(apiLoginFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
-    public AuthLoginSuccessHandler successHandler() {
-        return new AuthLoginSuccessHandler(passwordEncoder());
+    public APILoginFilter apiLoginFilter() throws Exception {
+        APILoginFilter apiLoginFilter = new APILoginFilter("/api/login");
+        apiLoginFilter.setAuthenticationManager(authenticationManager());
+
+        apiLoginFilter
+                .setAuthenticationFailureHandler(new APILoginFailHandler());
+
+        return apiLoginFilter;
     }
 
     @Bean
     public APICheckFilter apiCheckFilter() {
         return new APICheckFilter("/memos/**/*");
+    }
+
+    @Bean
+    public AuthLoginSuccessHandler successHandler() {
+        return new AuthLoginSuccessHandler(passwordEncoder());
     }
 }
