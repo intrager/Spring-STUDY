@@ -1,9 +1,9 @@
 package com.study.auth.config;
 
+import com.study.auth.security.handler.AuthLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,7 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/sample/all").permitAll()
                 .antMatchers("/sample/member").hasRole("USER");
-
         /*
             HttpSecurity -> formLogin()
             인가/인증 절차에서 문제가 발생했을 때 로그인 페이지를 보여주도록 지정할 수 있고,
@@ -33,6 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.logout();
 
-        http.oauth2Login();
+        http.oauth2Login().successHandler(successHandler());
+    }
+
+    @Bean
+    public AuthLoginSuccessHandler successHandler() {
+        return new AuthLoginSuccessHandler(passwordEncoder());
     }
 }
