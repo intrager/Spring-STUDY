@@ -1,5 +1,7 @@
 package com.study.auth.security.filter;
 
+import com.study.auth.security.dto.AuthMemberDTO;
+import com.study.auth.security.util.JWTUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,8 +17,11 @@ import java.io.IOException;
 @Log4j2
 public class APILoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    public APILoginFilter(String defaultFilterProcessesUrl) {
+    private JWTUtil jwtUtil;
+
+    public APILoginFilter(String defaultFilterProcessesUrl, JWTUtil jwtUtil) {
         super(defaultFilterProcessesUrl);
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -42,5 +47,20 @@ public class APILoginFilter extends AbstractAuthenticationProcessingFilter {
         log.info("successfulAuthentication: " + authResult);
 
         log.info(authResult.getPrincipal());
+
+        // email address
+        String email = ((AuthMemberDTO)authResult.getPrincipal()).getUsername();
+
+        String token = null;
+        try {
+            token = jwtUtil.generateToken(email);
+
+            response.setContentType("text/plain");
+            response.getOutputStream().write(token.getBytes());
+
+            log.info(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

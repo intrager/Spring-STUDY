@@ -5,6 +5,7 @@ import com.study.auth.security.filter.APILoginFilter;
 import com.study.auth.security.handler.APILoginFailHandler;
 import com.study.auth.security.handler.AuthLoginSuccessHandler;
 import com.study.auth.security.service.AuthUserDetailsService;
+import com.study.auth.security.util.JWTUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public APILoginFilter apiLoginFilter() throws Exception {
-        APILoginFilter apiLoginFilter = new APILoginFilter("/api/login");
+        APILoginFilter apiLoginFilter = new APILoginFilter("/api/login", jwtUtil());
         apiLoginFilter.setAuthenticationManager(authenticationManager());
 
         apiLoginFilter
@@ -62,8 +63,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public JWTUtil jwtUtil() {
+        return new JWTUtil();
+    }
+
+    @Bean
     public APICheckFilter apiCheckFilter() {
-        return new APICheckFilter("/memos/**/*");
+        return new APICheckFilter("/memos/**/*", jwtUtil());
     }
 
     @Bean

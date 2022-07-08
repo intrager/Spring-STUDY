@@ -6,5 +6,24 @@
 </head>
 <body>
 	<h1>For Admin</h1>
+
+	<script>
+        /**
+		 * 만일 jQuery로 외부에서 'memos/xxx'를 이용한다면 이 코드를 사용
+         */
+		$(".btn").click(function () {
+            $.ajax({
+				beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", 'Bearer ' + jwtValue);
+				},
+				dataType: "json",
+				url: 'http://localhost:8081/memos/all',
+				data: {email: 'user100@study.org'},
+				success: function (arr) {
+                    console.log(arr);
+				}
+			});
+		});
+	</script>
 </body>
 </html>
