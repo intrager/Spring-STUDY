@@ -9,9 +9,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = "movie")
+@ToString(exclude = "movieEntity")
 @Table(name = "tbl_poster")
-public class Poster {
+public class PosterEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +23,12 @@ public class Poster {
     private int idx;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Movie movie;
+    private MovieEntity movieEntity;
+
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
+    public void setMovieEntity(MovieEntity movieEntity) {
+        this.movieEntity = movieEntity;
+    }
 }
