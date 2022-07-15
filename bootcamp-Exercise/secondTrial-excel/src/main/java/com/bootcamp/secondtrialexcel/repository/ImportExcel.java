@@ -8,19 +8,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-@Service
+@Repository
 public class ImportExcel {
     private final static String excel2003 = ".xls";
     private final static String excel2007 = ".xlsx";
 
-    public List getListByExcel(InputStream in, String fileName) throws Exception {
-        List list = null;
+    public List<Map<String, String>> getListByExcel(InputStream in, String fileName) throws Exception {
+        List<Map<String, String>> list = null;
 
         // Excel
         Workbook workbook = this.getWorkbook(in, fileName);
@@ -31,7 +31,8 @@ public class ImportExcel {
         Row row = null;
         Cell cell = null;
 
-        list = new ArrayList<>();
+        list = new ArrayList<Map<String, String>>();
+
         for(int i = 0; i < workbook.getNumberOfSheets(); i++) {
             sheet = workbook.getSheetAt(i);
             if(sheet == null) continue;
@@ -40,15 +41,15 @@ public class ImportExcel {
                 row = sheet.getRow(j);
                 if(row == null || row.getFirstCellNum() == j) continue;
 
-                List li = new ArrayList<>();
+                List<Map<String, String>> li = new ArrayList<Map<String, String>>();
                 for(int y = row.getFirstCellNum(); y < row.getLastCellNum(); y++) {
                     cell = row.getCell(y);
-                    list.add(cell);
+                    list.add((Map<String, String>) cell);
                 }
-                list.add(li);
+                list.add((Map<String, String>) li);
             }
         }
-        workbook.close();
+
         return list;
     }
 

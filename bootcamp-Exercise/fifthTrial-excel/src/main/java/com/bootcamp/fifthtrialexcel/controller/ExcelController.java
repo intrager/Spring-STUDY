@@ -1,74 +1,70 @@
 package com.bootcamp.fifthtrialexcel.controller;
 
-import com.bootcamp.fifthtrialexcel.domain.Excel;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.bootcamp.fifthtrialexcel.service.ExcelService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/excel")
 public class ExcelController {
 
+    private final ExcelService excelService;
+
+    public ExcelController(ExcelService excelService) {
+        this.excelService = excelService;
+    }
+
     @GetMapping("")
-    public String enterExcelPage() {
-        return "excel/excel";
+    public String excelIndex() {
+        return "/excel/excelUploadPage";
     }
 
-    @PostMapping("/read")
-    public String readExcel(@RequestParam("file") MultipartFile file, Model model) throws IOException {
-        List<Excel> dataList = new ArrayList<>();
+    @ResponseBody
+    @PostMapping("/upload")
+    public Map<String, String> uploadExcelToAjax(MultipartHttpServletRequest request) throws Exception {
+        Map<String, String> result = new HashMap<String, String>();
+        MultipartFile excelFile = request.getFile("excelFile");
 
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        try {
+            if(excelFile != null || !excelFile.isEmpty()) {
+                result.put("code", "1");
+                result.put("msg", "업로드 성공");
 
-        if(!extension.equals("xlsx") && !extension.equals("xls")) {
-            throw new IOException("엑셀 파일만 업로드 해주세요");
+                File destFile = new File("C:\\bootcamp\\" + excelFile.getOriginalFilename());   // 파일 위치 지정
+                excelFile.transferTo(destFile); // 엑셀파일 생성
+                excelService.uploadExcel(destFile);   // service단 호출
+                destFile.delete();  // 업로드된 엑셀파일 삭제
+            } else {
+                result.put("code", "0");
+                result.put("msg", "업로드 실패");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
         }
-
-        Workbook workbook = null;
-
-        if(extension.equals("xlsx")) {
-            workbook = new XSSFWorkbook(file.getInputStream());
-        } else if(extension.equals("xls")) {
-            workbook = new HSSFWorkbook(file.getInputStream());
-        }
-
-        Sheet sheet = workbook.getSheetAt(0);
-
-        // 행의 개수를 for문으로 돌림
-        for(int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-            Row row = sheet.getRow(i);
-
-            Excel data = new Excel();
-
-            // data.setSeq((long) row.getCell(0).getNumericCellValue());
-            data.setWorkCode(row.getCell(0).getStringCellValue());
-            data.setWorkName(row.getCell(1).getStringCellValue());
-            data.setCompany(row.getCell(2).getStringCellValue());
-            data.setManager(row.getCell(3).getStringCellValue());
-            data.setRank(row.getCell(4).getStringCellValue());
-            data.setCategory(row.getCell(5).getStringCellValue());
-            data.setPhone(row.getCell(6).getStringCellValue());
-
-            dataList.add(data);
-        }
-        model.addAttribute("list", dataList);
-
-        return "excel/excelList";
-    }
-
-    @PostMapping("")
-    public String insertToDB(@ModelAttribute("excelData") Excel excel, Model model) {
-        return "excel/excel";
+        return result;
     }
 }
+/*
+java.lang.NullPointerException
+	at com.bootcamp.fifthtrialexcel.controller.ExcelController.uploadExcelToAjax(ExcelController.java:35)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+ */

@@ -14,7 +14,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ImportController {
@@ -39,7 +41,7 @@ public class ImportController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
         InputStream inputStream = null;
-        List list = null;
+        List<Map<String, String>> list = null;
         MultipartFile file = multipartRequest.getFile("filename");
 
         if(file.isEmpty()) return "index";
@@ -49,7 +51,7 @@ public class ImportController {
         inputStream.close();
 
         for(int i = 0; i < list.size(); i++) {
-            List input = (List) list.get(i);
+            List input = Collections.singletonList(list.get(i));
             excelMapper.insert(String.valueOf(input.get(0)), String.valueOf(input.get(1)),
                     String.valueOf(input.get(2)), String.valueOf(input.get(3)),
                     String.valueOf(input.get(4)), String.valueOf(input.get(5)),
