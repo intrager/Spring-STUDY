@@ -17,34 +17,29 @@ import org.springframework.web.servlet.ModelAndView;
 public class YoilTellerMVC {
 	
 	@RequestMapping("/getYoilMVC")
-	public ModelAndView main(int year, int month, int day) throws IOException {
-		
-		// 1. ModelAndView를 생성하고, 기본 뷰를 지정
-		ModelAndView mv = new ModelAndView();
-	
-		// 2. 유효성 검사
+	public String main(int year, int month, int day, Model model) throws IOException {
+
+		// 1. 유효성 검사
 		if(!isValid(year, month, day))
-			return mv;
+			return "yoilError";
 		
 		// 2. 요일 계산
 		char yoil = getYoil(year, month, day);
 		
 		// 3. 계산한 결과를 model에 저장
-		mv.addObject("year", year);
-		mv.addObject("month", month);
-		mv.addObject("day", day);
-		mv.addObject("yoil", yoil);
-	
-		// 4. 결과를 보여줄 view 지정
-		mv.setViewName("yoil");
-		
-		return mv;
-		//return "yoil";	// /WEB-INF/views/yoil.jsp
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
+		model.addAttribute("day", day);
+		model.addAttribute("yoil", yoil);
+
+		return "yoil";	// /WEB-INF/views/yoil.jsp
 	}
 
 	private boolean isValid(int year, int month, int day) {
-		// TODO Auto-generated method stub
-		return true;
+		if(year == -1 || month == -1 || day == -1)
+			return false;
+		
+		return (1 <= month && month < 12) && (1 <= day && day <= 31);
 	}
 
 	private char getYoil(int year, int month, int day) {
