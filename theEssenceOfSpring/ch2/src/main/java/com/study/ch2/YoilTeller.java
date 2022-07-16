@@ -10,18 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-// ³â¿ùÀÏÀ» ÀÔ·ÂÇÏ¸é ¿äÀÏÀ» ¾Ë·ÁÁÖ´Â ÇÁ·Î±×·¥
 @Controller
 public class YoilTeller {
 	
 	@RequestMapping("/getYoil")
 	public void main(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// 1. ÀÔ·Â
+		// 1. ï¿½Ô·ï¿½
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		String day = request.getParameter("day");
 		
-		// 2. ÀÛ¾÷
+		// 2. ï¿½Û¾ï¿½
 		int yyyy = Integer.parseInt(year);
 		int mm = Integer.parseInt(month);
 		int dd = Integer.parseInt(day);
@@ -29,14 +28,14 @@ public class YoilTeller {
 		Calendar cal = Calendar.getInstance();
 		cal.set(yyyy, mm - 1, dd);
 		
-		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);	// 1:ÀÏ¿äÀÏ, 2:¿ù¿äÀÏ, ...
-		char yoil = " ÀÏ¿ùÈ­¼ö¸ñ±ÝÅä".charAt(dayOfWeek);
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);	// 1:ï¿½Ï¿ï¿½ï¿½ï¿½, 2:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ...
+		char yoil = " ï¿½Ï¿ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½".charAt(dayOfWeek);
 	
-		// 3. Ãâ·Â
+		// 3. ï¿½ï¿½ï¿½
 		response.setContentType("text/html");
 		response.setCharacterEncoding("utf-8");
-		PrintWriter out = response.getWriter();	// response °´Ã¼¿¡¼­ ºê¶ó¿ìÀú·ÎÀÇ Ãâ·Â ½ºÆ®¸²À» ¾ò´Â´Ù.
-		out.println(year + "³â " + month + "¿ù " + day + "ÀÏÀº ");
-		out.println(yoil + "¿äÀÏÀÔ´Ï´Ù.");
+		PrintWriter out = response.getWriter();	// response ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â´ï¿½.
+		out.println(year + "ï¿½ï¿½ " + month + "ï¿½ï¿½ " + day + "ï¿½ï¿½ï¿½ï¿½ ");
+		out.println(yoil + "ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 	}
 }
