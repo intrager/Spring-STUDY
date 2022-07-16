@@ -20,7 +20,7 @@ import org.springframework.validation.support.BindingAwareModelMap;
 
 // @Controller + @RequestMapping == @WebServlet
 @WebServlet("/myDispatcherServlet")
-public class MyDispatcherServlet extends HttpServlet {
+public class MyDispatcherServlet extends HttpServlet {	// http://localhost:8080/ch2/myDispatcherServlet?year=2022&month=7&day=16
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Map map = request.getParameterMap();
