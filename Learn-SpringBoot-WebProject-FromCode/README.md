@@ -7,3 +7,5 @@
   - Gradle 7.4.1
   - Spring Boot 2.6.9
   - MariaDB 3.0.4
+  - Thymeleaf 3.0.4
+  - Querydsl 5.0.0
