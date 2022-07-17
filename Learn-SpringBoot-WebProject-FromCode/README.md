@@ -9,3 +9,4 @@
   - MariaDB 3.0.4
   - Thymeleaf 3.0.4
   - Querydsl 5.0.0
+  - IntelliJ 2021.3.2
