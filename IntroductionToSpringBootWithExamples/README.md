@@ -9,3 +9,4 @@
   - Oracle 21.6.
   - MyBatis 2.2.2
   - Servlet(JSP, JSTL) 1.2
+  - Spring Tool Suite 4
