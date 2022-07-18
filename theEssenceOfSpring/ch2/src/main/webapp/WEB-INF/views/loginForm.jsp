@@ -68,7 +68,7 @@
 		<input type="password" name="pw" placeholder="비밀번호">
 		<button>로그인</button>
 		<div>
-			<label><input type="checkbox" name="rememberId" value="on" ${empty cookie.id.value? "" : "checked"}>아이디 기억</label> | 
+			<label><input type="checkbox" name="rememberId" ${empty cookie.id.value? "" : "checked"}>아이디 기억</label> | 
 			<a href="">비밀번호 찾기</a>
 			<a href="">회원가입</a>
 		</div>
