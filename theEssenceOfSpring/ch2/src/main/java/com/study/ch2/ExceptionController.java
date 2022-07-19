@@ -2,10 +2,12 @@ package com.study.ch2;
 
 import java.io.FileNotFoundException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 public class ExceptionController {
@@ -18,10 +20,11 @@ public class ExceptionController {
 	}	
 
 	@ExceptionHandler(Exception.class)	// 어떤 예외일 때 호출해야하는지 적어줘야함
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)// 200 -> 500
 	public String catcher(Exception ex, Model model) {
 		System.out.println("model = " + model);
 		System.out.println("catcher() in ExceptionController");
-		model.addAttribute("ex", ex);
+		//model.addAttribute("ex", ex);
 		return "error";
 	}
 	
