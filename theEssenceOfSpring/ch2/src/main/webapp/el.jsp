@@ -6,7 +6,7 @@
 	Person person = new Person();
 	request.setAttribute("person", person);
 	request.setAttribute("name", "한정수");
-	request.setAttribute("list", new java.util.ArrayList());
+	// request.setAttribute("list", new java.util.ArrayList());
 %>
 <!DOCTYPE html>
 <html>
@@ -22,7 +22,7 @@ name=<%=request.getAttribute("name")%> <br>
 name=${requestScope.name} <br>
 name=${name} <br>
 id=<%=request.getParameter("id")%> <br>
-id=${pageContext.request.getParameter("id")} <br>
+<%-- id=${pageContext.request.getParameter("id")} <br> --%>
 id=${param.id} <br>
 "1" + 1 = ${"1"+1} <br>
 "1" += "1" = ${"1" += "1"} <br>

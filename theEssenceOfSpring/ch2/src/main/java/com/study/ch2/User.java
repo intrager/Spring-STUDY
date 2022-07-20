@@ -1,12 +1,28 @@
 package com.study.ch2;
 
+import java.util.Arrays;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class User {
 	private String id;
 	private String pw;
 	private String name;
 	private String email;
-	private String birth;
-	private String sns;
+	@DateTimeFormat(pattern="yyyy-MM-dd")	// 적용할 포맷만 적용
+	private Date birth;
+	private String[] hobby;
+	public String[] getHobby() {
+		return hobby;
+	}
+	public void setHobby(String[] hobby) {
+		this.hobby = hobby;
+	}
+
+	private String[] sns;
+	
+	
 	
 	public String getId() {
 		return id;
@@ -32,23 +48,35 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getBirth() {
+	public Date getBirth() {
 		return birth;
 	}
-	public void setBirth(String birth) {
+	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
-	public String getSns() {
+//	public String[] getHobby() {
+//		return hobby;
+//	}
+//	public void setHobby(String[] hobby) {
+//		this.hobby = hobby;
+//	}
+	public String[] getSns() {
 		return sns;
 	}
-	public void setSns(String sns) {
+	public void setSns(String[] sns) {
 		this.sns = sns;
 	}
+	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email + ", birth=" + birth + ", sns="
-				+ sns + "]";
+		return "User [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email 
+				+ ", birth=" + birth + ", hobby=" + Arrays.toString(hobby) + ", sns=" + Arrays.toString(sns) + "]";
 	}
+//	@Override
+//	public String toString() {
+//		return "User [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email 
+//				+ ", birth=" + birth + ", hobby=" + Arrays.toString(hobby) + ", sns=" + Arrays.toString(sns) + "]";
+//	}
 
 	
 }
