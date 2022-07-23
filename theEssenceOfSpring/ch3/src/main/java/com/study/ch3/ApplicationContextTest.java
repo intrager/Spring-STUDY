@@ -15,27 +15,27 @@ import org.springframework.stereotype.Component;
 import javax.inject.*;
 import java.util.*;
 
-@Component
-@Scope("prototype")
-class Door {}
-@Component class Engine {}
-@Component class TurboEngine extends Engine {}
-@Component class SuperEngine extends Engine {}
-
-@Component
-class Car {
-	@Value("red") String color;
-	@Value("100") int oil;
-	@Autowired Engine engine;
-	@Autowired Door[] doors;
-	
-	@Override
-	public String toString() {
-		return "Car [color=" + color + ", oil=" + oil + ", engine=" + engine + ", doors=" + Arrays.toString(doors)
-				+ "]";
-	}
-	
-}
+//@Component
+//@Scope("prototype")
+//class Door {}
+//@Component class Engine {}
+//@Component class TurboEngine extends Engine {}
+//@Component class SuperEngine extends Engine {}
+//
+//@Component
+//class Car {
+//	@Value("red") String color;
+//	@Value("100") int oil;
+//	@Autowired Engine engine;
+//	@Autowired Door[] doors;
+//	
+//	@Override
+//	public String toString() {
+//		return "Car [color=" + color + ", oil=" + oil + ", engine=" + engine + ", doors=" + Arrays.toString(doors)
+//				+ "]";
+//	}
+//	
+//}
 
 public class ApplicationContextTest {
 	public static void main(String[] args) {
