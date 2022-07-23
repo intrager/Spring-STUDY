@@ -1,0 +1,40 @@
+package com.study.ch3;
+
+import static org.junit.Assert.assertTrue;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.sql.DataSource;
+
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+public class DBConnectionTest2 {
+	@Test
+	public void jdbcConnectionTest() throws Exception {
+		// 스키마의 이름(bootcamp)이 다른 경우 알맞게 변경
+//			String DB_URL = "jdbc:mysql://localhost:3306/bootcamp?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+//			
+//			String DB_USER = "coding";
+//			String DB_PASSWORD = "cometrue";
+//			String DB_DRIVER = "com.mysql.jdbc.Driver";
+//			
+//			DriverManagerDataSource ds = new DriverManagerDataSource();
+//			ds.setDriverClassName(DB_DRIVER);
+//			ds.setUrl(DB_URL);
+//			ds.setUsername(DB_USER);
+//			ds.setPassword(DB_PASSWORD);
+		
+		ApplicationContext ac = new GenericXmlApplicationContext("file:src/main/webapp/WEB-INF/spring/**/root-context.xml");
+		DataSource ds = ac.getBean(DataSource.class);
+	
+		Connection conn = ds.getConnection();	// 데이터베이스의 연결을 얻는다.
+		
+		System.out.println("conn = " + conn);
+		assertTrue(conn != null);	// 괄호 안의 조건식이 true면 테스트 성공, 아니면 실패
+	}
+}
