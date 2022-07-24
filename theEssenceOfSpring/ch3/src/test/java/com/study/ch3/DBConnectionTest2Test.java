@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 import javax.sql.DataSource;
@@ -74,6 +75,37 @@ public class DBConnectionTest2Test {
 		assertTrue(rowCnt == 1);
 		
 		assertTrue(selectUser(user.getId()) != null);
+	}
+	
+	@Test
+	public void transactionTest() throws Exception {		
+		Connection conn = null;
+		try {
+			deleteAll();
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
+			String sql = "insert into user_info values (?, ?, ?, ?, ?, ?, now())";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "asdf");
+			pstmt.setString(2, "1234");
+			pstmt.setString(3, "han");
+			pstmt.setString(4, "qwer@study.ac.kr");
+			pstmt.setDate(5, new java.sql.Date(new Date().getTime()));
+			pstmt.setString(6, "google");
+			
+			int rowCnt = pstmt.executeUpdate();
+			
+			pstmt.setString(1, "asdf");
+			rowCnt = pstmt.executeUpdate();
+			
+			conn.commit();
+		} catch (Exception e) {
+			conn.rollback();
+			e.printStackTrace();
+		} finally {
+			
+		}
 	}
 	
 	// 매개변수로 받은 사용자 정보로 user_info 테이블을 update하는 메서드
