@@ -21,20 +21,23 @@ public class A1DaoTest {
 	@Autowired
 	DataSource ds;
 	
+	@Autowired
+	DataSourceTransactionManager tm;
+	
 	@Test
 	public void insertTest() throws Exception {
 		// TxManager를 생성
-		PlatformTransactionManager ts = new DataSourceTransactionManager(ds);
-		TransactionStatus status = ts.getTransaction(new DefaultTransactionDefinition());
+//		PlatformTransactionManager ts = new DataSourceTransactionManager(ds);
+		TransactionStatus status = tm.getTransaction(new DefaultTransactionDefinition());
 		try {
 			a1Dao.deleteAll();
 			// Tx 시작
 			a1Dao.insert(1, 100);
-			a1Dao.insert(1, 200);
-			ts.commit(status);
+			a1Dao.insert(2, 200);
+			tm.commit(status);
 		} catch (Exception e) {
 			e.printStackTrace();
-			ts.rollback(status);
+			tm.rollback(status);
 		} finally {
 			
 		}
