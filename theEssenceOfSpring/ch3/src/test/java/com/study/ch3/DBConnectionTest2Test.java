@@ -69,6 +69,7 @@ public class DBConnectionTest2Test {
 		rowCnt = insertUser(user);
 		assertTrue(rowCnt == 1);
 		
+		user = new User("qwer", "1234", "test", "qwer1234@study.ac.kr", new Date(), "google", new Date());
 		rowCnt = updateUser(user);
 		assertTrue(rowCnt == 1);
 		
@@ -79,11 +80,19 @@ public class DBConnectionTest2Test {
 	public int updateUser(User user) throws Exception {
 		Connection conn = ds.getConnection();
 		
-		String sql = "update user_info set pwd='1q2w3e4r', name='jeongs' where id = ?";
+		String sql = "update user_info "
+				+ "set pwd=?, name=?, email=?, birth=?, sns=?, reg_date=? "
+				+ "where id = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, user.getId());
-
+		pstmt.setString(1, user.getPwd());
+		pstmt.setString(2, user.getName());
+		pstmt.setString(3, user.getEmail());
+		pstmt.setDate(4, new java.sql.Date(user.getBirth().getTime()));
+		pstmt.setString(5, user.getSns());
+		pstmt.setTimestamp(6, new java.sql.Timestamp(user.getReg_date().getTime()));
+		pstmt.setString(7, user.getId());
+		
 		return pstmt.executeUpdate();
 	}
 	
