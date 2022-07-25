@@ -26,4 +26,9 @@ public class TxServiceTest {
 	public void insertA1WithTxTestSuccess() throws Exception {
 		txService.insertA1WithTxSuccess();
 	}
+	
+	@Test
+	public void insertA1WithTxTest() throws Exception {
+		txService.insertA1WithTx();
+	}
 }
