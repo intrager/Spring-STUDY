@@ -5,6 +5,6 @@
 		
 <configuration>
 	<typeAliases>
-		<!-- <typeAlias alias="BoardDto" type="com.study.ch4.domain.BoardDto" /> -->
+		<typeAlias alias="BoardDto" type="com.study.ch4.domain.BoardDto" />
 	</typeAliases>
 </configuration>
