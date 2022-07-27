@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.study.ch4.domain.BoardDto;
 import com.study.ch4.domain.PageHandler;
@@ -23,6 +25,42 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 
+	@PostMapping("/remove")
+	public String remove(Integer bno, Integer page, Integer pageSize, Model m, HttpSession session, RedirectAttributes rattr) {
+		String writer = (String) session.getAttribute("id");
+		try {
+			m.addAttribute("page", page);
+			m.addAttribute("pageSize", pageSize);
+			
+			int rowCnt = boardService.remove(bno, writer);
+			
+			if(rowCnt != 1)
+				throw new Exception("board remove error");
+						
+			rattr.addFlashAttribute("msg", "Delete Success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			rattr.addFlashAttribute("msg", "Delete Error");
+		}
+		
+		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/read")
+	public String read(Integer bno, Integer page, Integer pageSize, Model m) {
+		try {
+			BoardDto boardDto = boardService.read(bno);
+//			m.addAttribute("boardDto", boardDto);	// 아래 문장과 동일
+			m.addAttribute(boardDto);	// 타입의 첫글자가 소문자가 된 게 이름으로 저장됨
+			m.addAttribute("page", page);
+			m.addAttribute("pageSize", pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "board";
+	}
+	
+	
 	@GetMapping("/list")
 	public String list(Integer page, Integer pageSize, Model m, HttpServletRequest request) {
 		if(!loginCheck(request))
@@ -43,6 +81,8 @@ public class BoardController {
 			
 			m.addAttribute("list", list);
 			m.addAttribute("ph", pageHandler);
+			m.addAttribute("page",page);
+			m.addAttribute("pageSize",pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
