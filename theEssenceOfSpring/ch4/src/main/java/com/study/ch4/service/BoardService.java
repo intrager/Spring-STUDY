@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.study.ch4.dao.BoardDao;
 import com.study.ch4.domain.BoardDto;
+import com.study.ch4.domain.SearchCondition;
 
 public interface BoardService {
 	int getCount() throws Exception;
@@ -18,4 +19,6 @@ public interface BoardService {
 	List<BoardDto> getPage(Map map) throws Exception;
 	int modify(BoardDto boardDto) throws Exception;
 	
+	int getSearchResultCnt(SearchCondition sc) throws Exception;
+	List<BoardDto> getSearchResultPage(SearchCondition sc) throws Exception;
 }

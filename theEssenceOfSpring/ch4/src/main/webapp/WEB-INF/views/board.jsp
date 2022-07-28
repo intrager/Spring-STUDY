@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ page session="true" %>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId == '' ? '/login/login' : '/login/logout'}"/>
@@ -85,11 +85,11 @@
 			<form action="" class="frm" id="form" method="post">
 				<input type="hidden" name="bno" value="${boardDto.bno}">
 				
-				<input type="text" name="title" value="${boardDto.title}" placeholder="제목을 입력해주세요" ${mode == "new" ? '' : 'readonly="readonly"'}>
-				<textarea name="content" rows="20" placeholder="내용을 입력해주세요" ${mode == "new" ? '' : "readonly='readonly'"}>${boardDto.content}</textarea>
+				<input type="text" name="title" value="<c:out value='${boardDto.title}'/>" placeholder="제목을 입력해주세요" ${mode == "new" ? '' : 'readonly="readonly"'}>
+				<textarea name="content" rows="20" placeholder="내용을 입력해주세요" ${mode == "new" ? '' : "readonly='readonly'"}><c:out value="${boardDto.content}"/></textarea>
 				
 				<c:if test="${mode eq 'new'}">
-					<button type="button" id="writeBtn" class="btn btn-write" class="fa fa-pencil"> 등록</button>
+					<button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
 				</c:if>
 				<c:if test="${mode ne 'new'}">
 					<button type="button" id="writeNewBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 글쓰기</button>
@@ -135,7 +135,7 @@
 				});
 			
 				$('#listBtn').on("click", function() {
-					location.href = "<c:url value='/board/list?page=${page}&pageSize=${pageSize}'/>";
+					location.href = "<c:url value='/board/list${searchCondition.queryString}'/>";
 				});
 				
 				$('#modifyBtn').on("click", function() {
@@ -152,7 +152,7 @@
 					}
 					
 					// 2. 수정 상태이면, 수정된 내용을 서버로 전송					
-					form.attr("action", "<c:url value='/board/modify?page=${page}&pageSize=${pageSize}'/>");
+					form.attr("action", "<c:url value='/board/modify${searchCondition.queryString}'/>");
 					form.attr("method", "post");
 					
 					if(formCheck()) {
@@ -162,12 +162,12 @@
 				
 				$('#removeBtn').on("click", function() {
 					if(!confirm("정말로 삭제하시겠습니까?")) return;
+					
 					let form = $('#form');
-					form.attr("action", "<c:url value='/board/remove?page=${page}&pageSize=${pageSize}'/>");
+					form.attr("action", "<c:url value='/board/remove${searchCondition.queryString}'/>");
 					form.attr("method", "post");
 					form.submit();
-				});
-				
+				});				
 			});
 		</script>
 	</body>

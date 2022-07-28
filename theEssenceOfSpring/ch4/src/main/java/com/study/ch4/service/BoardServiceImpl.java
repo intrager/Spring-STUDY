@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.study.ch4.dao.BoardDao;
 import com.study.ch4.domain.BoardDto;
+import com.study.ch4.domain.SearchCondition;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 	@Autowired
 	BoardDao boardDao;
-
+	
 	@Override
 	public int getCount() throws Exception {
 		return boardDao.count();
@@ -53,9 +54,13 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.update(boardDto);
 	}
 	
-//	@Override
-//	public int getsearchResultCnt(SearchCondition sc) throws Exception {
-//		
-//	}
+	@Override
+	public int getSearchResultCnt(SearchCondition sc) throws Exception {
+		return boardDao.searchResultCnt(sc);
+	}
 	
+	@Override
+	public List<BoardDto> getSearchResultPage(SearchCondition sc) throws Exception {
+		return boardDao.searchSelectPage(sc);
+	}
 }

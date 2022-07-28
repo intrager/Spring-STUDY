@@ -65,11 +65,26 @@
 		WHERE bno = #{bno}
 	</update>
 	
+	<sql id="searchCondition">
+		<choose>
+			<when test='option=="T"'>
+				and title like concat('%', #{keyword}, '%')
+			</when>
+			<when test='option=="W"'>
+				and writer like concat('%', #{keyword}, '%')
+			</when>
+			<otherwise>
+				and (title like concat('%', #{keyword}, '%')
+				or content like concat('%', #{keyword}, '%'))
+			</otherwise>
+		</choose>
+	</sql>
+	
 	<select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
 		select bno, title, content, writer, view_cnt, comment_cnt, reg_Date
 		from board
 		where true
-		and title like concat('%', #{keyword}, '%') # %title%
+		<include refid="searchCondition" />
 		order by reg_Date desc, bno desc
 			limit #{offset}, #{pageSize}
 	</select>
@@ -78,6 +93,6 @@
 		select count(*)
 		from board
 		where true
-			and title like concat('%', #{keyword}, '%')
+		<include refid="searchCondition" />
 	</select>
 </mapper>

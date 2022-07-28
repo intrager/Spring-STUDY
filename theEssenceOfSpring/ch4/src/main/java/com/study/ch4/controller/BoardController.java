@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.study.ch4.domain.BoardDto;
 import com.study.ch4.domain.PageHandler;
+import com.study.ch4.domain.SearchCondition;
 import com.study.ch4.service.BoardService;
 
 @Controller
@@ -73,27 +75,17 @@ public class BoardController {
 	}
 	
 	@GetMapping("/list")
-	public String list(@RequestParam(defaultValue = "1") Integer page,
-			@RequestParam(defaultValue = "10") Integer pageSize, Model m, HttpServletRequest request) {
+	public String list(@ModelAttribute SearchCondition sc, Model m, HttpServletRequest request) {
 		if(!loginCheck(request))
 			return "redirect:/login/login?toURL=" + request.getRequestURL();	// 로그인을 안 했으면 로그인 화면으로 이동
 		
 		try {
-			int totalCnt = boardService.getCount();
+			int totalCnt = boardService.getSearchResultCnt(sc);
 			m.addAttribute("totalCnt", totalCnt);
 			
-			PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-			
-			if(page < 0 || page > pageHandler.getTotalPage())
-				page = 1;
-			if(pageSize < 0 || pageSize > 50)
-				pageSize = 10;
-			
-			Map map = new HashMap();
-			map.put("offset", (page - 1) * pageSize);
-			map.put("pageSize", pageSize);
-			
-			List<BoardDto> list = boardService.getPage(map);
+			PageHandler pageHandler = new PageHandler(totalCnt, sc);
+
+			List<BoardDto> list = boardService.getSearchResultPage(sc);
 			m.addAttribute("list", list);
 			m.addAttribute("ph", pageHandler);
 		} catch (Exception e) {
