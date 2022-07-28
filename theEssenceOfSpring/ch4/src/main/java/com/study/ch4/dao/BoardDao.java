@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.study.ch4.domain.BoardDto;
+import com.study.ch4.domain.SearchCondition;
 
 public interface BoardDao {
 	BoardDto select(Integer bno) throws Exception;
@@ -17,6 +18,6 @@ public interface BoardDao {
 	int deleteAll() throws Exception;
 	int count() throws Exception;
 	
-//	int searchResultCnt(SearchCondition sc) throws Exception;
-//	List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception;
+	int searchResultCnt(SearchCondition sc) throws Exception;
+	List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception;
 }

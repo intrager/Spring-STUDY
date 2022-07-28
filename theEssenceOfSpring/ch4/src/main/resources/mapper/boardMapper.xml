@@ -65,4 +65,19 @@
 		WHERE bno = #{bno}
 	</update>
 	
+	<select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
+		select bno, title, content, writer, view_cnt, comment_cnt, reg_Date
+		from board
+		where true
+		and title like concat('%', #{keyword}, '%') # %title%
+		order by reg_Date desc, bno desc
+			limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+		select count(*)
+		from board
+		where true
+			and title like concat('%', #{keyword}, '%')
+	</select>
 </mapper>

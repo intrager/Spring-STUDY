@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.study.ch4.domain.BoardDto;
+import com.study.ch4.domain.SearchCondition;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -65,15 +66,15 @@ public class BoardDaoImpl implements BoardDao {
 		return session.update(namespace + "increaseViewCnt", bno);
 	}	// int update(String statement, Object parameter)
 	
-//	@Override
-//	public int searchResultCnt(SearchCondition sc) throws Exception {
-//		System.out.println("sc in searchResultCnt() = " + sc);
-//		System.out.println("session = " + session);
-//		return session.selectOne(namespace + "searchResultCnt", sc);
-//	}	// T selectOne(String statement, Object parameter)
-//	
-//	@Override
-//	public List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception {
-//		return session.selectList(namespace + "searchSelectPage", sc);
-//	}	// List<E> selectList(String statement, Object parameter)
+	@Override
+	public int searchResultCnt(SearchCondition sc) throws Exception {
+		System.out.println("sc in searchResultCnt() = " + sc);
+		System.out.println("session = " + session);
+		return session.selectOne(namespace + "searchResultCnt", sc);
+	}	// T selectOne(String statement, Object parameter)
+	
+	@Override
+	public List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception {
+		return session.selectList(namespace + "searchSelectPage", sc);
+	}	// List<E> selectList(String statement, Object parameter)
 }
