@@ -27,13 +27,13 @@ public class SimpleRestController {
 		return p;
 	}
 	
-	@PostMapping("/send")
-//	@ResponseBody
-	public Person test2(@RequestBody Person p) {
-		System.out.println("p = " + p);
-		p.setName("ABC");
-		p.setAge(p.getAge() + 10);
-		
-		return p;
-	}
+//	@PostMapping("/send")
+////	@ResponseBody
+//	public Person test2(@RequestBody Person p) {
+//		System.out.println("p = " + p);
+//		p.setName("ABC");
+//		p.setAge(p.getAge() + 10);
+//		
+//		return p;
+//	}
 }

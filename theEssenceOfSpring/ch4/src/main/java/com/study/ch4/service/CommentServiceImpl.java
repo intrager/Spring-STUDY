@@ -48,7 +48,8 @@ public class CommentServiceImpl implements CommentService {
 	
 	@Override
 	public List<CommentDto> getList(Integer bno) throws Exception {
-		return commentDao.selectAll(bno);
+		throw new Exception("test");
+//		return commentDao.selectAll(bno);
 	}
 	
 	@Override
