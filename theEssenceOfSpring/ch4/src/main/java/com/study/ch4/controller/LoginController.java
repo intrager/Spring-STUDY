@@ -83,6 +83,4 @@ public class LoginController {
 		return user != null && user.getPwd().equals(pwd);
 	}
 	
-	
-	
 }
