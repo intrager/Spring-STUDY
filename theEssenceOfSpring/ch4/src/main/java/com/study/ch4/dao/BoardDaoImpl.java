@@ -14,7 +14,7 @@ import com.study.ch4.domain.SearchCondition;
 @Repository
 public class BoardDaoImpl implements BoardDao {
 	@Autowired
-	SqlSession session;
+	private SqlSession session;
 	
 	private static String namespace = "com.study.ch4.dao.BoardMapper.";
 	
@@ -77,4 +77,12 @@ public class BoardDaoImpl implements BoardDao {
 	public List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception {
 		return session.selectList(namespace + "searchSelectPage", sc);
 	}	// List<E> selectList(String statement, Object parameter)
+
+	@Override
+	public int updateCommentCnt(Integer bno, int cnt) {
+		Map map = new HashMap();
+		map.put("cnt", cnt);
+		map.put("bno", bno);
+		return session.update(namespace + "updateCommentCnt", map);
+	}
 }

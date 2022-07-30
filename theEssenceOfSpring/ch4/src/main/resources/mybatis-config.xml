@@ -7,5 +7,6 @@
 	<typeAliases>
 		<typeAlias alias="BoardDto" type="com.study.ch4.domain.BoardDto" />
 		<typeAlias alias="SearchCondition" type="com.study.ch4.domain.SearchCondition" />
+		<typeAlias alias="CommentDto" type="com.study.ch4.domain.CommentDto" />
 	</typeAliases>
 </configuration>
