@@ -9,13 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.study.ch4.domain.Person;
 
-@RestController
+@Controller
 public class SimpleRestController {
 	
 //	@GetMapping("/ajax")
 //	public String ajax() {
 //		return "ajax";
 //	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
 	
 	@PostMapping("/send")
 //	@ResponseBody
