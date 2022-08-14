@@ -22,11 +22,25 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+# Eclipse
+.settings
+/.target/
+/target/
+target
+Servers
+.classpath
+.project
+.springBeans
+.gitignore
+/.metadata/
+.metadata
+
 # IntelliJ
 *.iml
 .idea
 
+.deployables
+
 # gitignore
 .gitignore
-
 
