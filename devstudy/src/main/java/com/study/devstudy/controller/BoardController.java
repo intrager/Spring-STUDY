@@ -9,41 +9,53 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/board")
 public class BoardController {
 
-    @GetMapping("/register")
+    @GetMapping(path="/get", params="register")
     public String registerForm() {
         log.info("registerForm");
-        return "success";
+        return "board/register";
     } // http://localhost:8081/board/register
 
-    @PostMapping("/register")
+    @PostMapping(path = "/post", params = "register")
     public String register() {
         log.info("register");
-        return "success";
+        return "board/list";
     }
 
-    @GetMapping("/modify")
+    @GetMapping(path = "/get", params = "modify")
     public String modifyForm() {
         log.info("modifyForm");
-        return "success";
+        return "board/modify";
     } // http://localhost:8081/board/modify
 
-    @PostMapping("/modify")
+    @PostMapping(path = "/post", params = "modify")
     public String modify() {
         log.info("modify");
-        return "success";
+        return "board/list";
     }
 
-    @PostMapping("/remove")
+    @GetMapping(path = "/get", params = "remove")
+    public String removeForm() {
+        log.info("removeForm");
+        return "board/remove";
+    } // http://localhost:8081/board/remove
+
+    @PostMapping(path = "/post", params = "remove")
     public String remove() {
         log.info("remove");
-        return "success";
+        return "board/list";
     }
 
-    @GetMapping("/list")
+    @GetMapping(path = "/get", params = "list")
     public String list() {
         log.info("list");
-        return "success";
+        return "board/list";
     } // http://localhost:8081/board/list
+
+    @RequestMapping(path = "/get", params = "read")
+    public String read() {
+        log.info("read");
+        return "board/read";
+    } // http://localhost:8081/board/read/
 
     /**
      * 위의 @PathVariable을 빼면 {bno}가 매핑이 안 됨
