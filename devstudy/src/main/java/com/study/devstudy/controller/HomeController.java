@@ -1,11 +1,14 @@
 package com.study.devstudy.controller;
 
+import com.study.devstudy.domain.Board;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,5 +34,10 @@ public class HomeController {
         model.addAttribute("servetTime", formattedNow);
 
         return "home";
+    }
+
+    @GetMapping("/ajaxHome")
+    public String ajaxHome() {
+        return "ajaxHome";
     }
 }
