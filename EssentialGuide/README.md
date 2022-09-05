@@ -6,5 +6,5 @@
 - IntelliJ Ultimate
 - JDK 11
 - Spring Boot 2.6.10
-- MaridDB 10.6.8
+- MariaDB 10.6.8
 - Gradle 7.5
