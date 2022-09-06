@@ -22,7 +22,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.study.essentialguide")) // 스캔할 패키지 범위
+                .apis(RequestHandlerSelectors.basePackage("com.study.essentialguide.controller")) // 스캔할 패키지 범위
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -40,12 +40,12 @@ public class SwaggerConfiguration {
      * @ApiParam 매개변수에 대한 설명 및 설정을 위한 어노테이션. 메서드의 매개변수뿐 아니라
      * DTO 객체를 매개변수로 사용할 경우 DTO 클래스 내의 매개변수에도 정의할 수 있음
      */
-    @ApiOperation(value = "GET 메서드 예제", notes = "@RequestParam을 활용한 Get Method")
-    @GetMapping(value = "/request1")
-    public String getRequestParam1(
+    @ApiOperation(value = "메서드 예제", notes = "Product 예제")
+    @GetMapping(value = "/request")
+    public String getRequestParam(
             @ApiParam(value = "이름", required = true) @RequestParam String name,
-            @ApiParam(value = "이메일", required = true) @RequestParam String email,
-            @ApiParam(value = "회사", required = true) @RequestParam String organization) {
-        return name + ' ' + email + ' ' + organization;
+            @ApiParam(value = "가격", required = true) @RequestParam Integer price,
+            @ApiParam(value = "재고", required = true) @RequestParam Integer stock) {
+        return name + ' ' + price + ' ' + stock;
     }
 }
