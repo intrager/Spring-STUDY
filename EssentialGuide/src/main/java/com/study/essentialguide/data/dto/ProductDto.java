@@ -1,12 +1,11 @@
 package com.study.essentialguide.data.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ProductDto {
     private String name;
     private int price;
